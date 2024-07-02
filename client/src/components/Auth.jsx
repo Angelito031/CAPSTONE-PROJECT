@@ -35,7 +35,7 @@ const Auth = () => {
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <div>
+        <div className="bg-gray-400">
           <input
             type="text"
             name="username"
