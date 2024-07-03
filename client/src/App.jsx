@@ -1,5 +1,9 @@
-import Auth from "./components/Auth";
+import { useAuthStore } from "./store/store";
+import { Navigate } from "react-router-dom";
 
-export default function App() {
-  return <Auth />;
-}
+const App = () => {
+  const { isAuth } = useAuthStore();
+  return isAuth ? <div>Dashboard</div> : <Navigate to="/login" />;
+};
+
+export default App;
