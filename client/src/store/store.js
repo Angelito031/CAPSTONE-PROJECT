@@ -28,6 +28,17 @@ const useAuthStore = create((set) => ({
       set({ isLoading: false });
     }
   },
+  register: async (userData) => {
+    set({ isLoading: true });
+    try {
+      const response = await axios.post("/api/register", userData);
+      set({ user: response.data.user, isAuth: true });
+    } catch (error) {
+      console.error("Registration failed", error);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
 }));
 
 const useJobStore = create((set) => ({
