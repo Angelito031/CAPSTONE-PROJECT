@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { useAuthStore, useLoadingStore } from "../store/store";
+import { useAuthStore } from "../store/store";
 import univImage from "../assets/univ.jpg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useAuthStore();
-  const { isLoading } = useLoadingStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEmpty, setIsEmpty] = useState("");
+  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     username: "",
     password: "",
@@ -19,8 +21,28 @@ const Login = () => {
     });
   };
 
+  const handleCheck = () => {
+    if (credentials.username === "") {
+      setIsEmpty("Username is Empty, Please fill up all credentials");
+      return false;
+    } else if (credentials.password === "") {
+      setIsEmpty("Password is Empty, Please fill up all credentials");
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const handleLogin = async () => {
-    await login(credentials);
+    setIsLoading(true);
+    if (handleCheck()) {
+      await login(credentials);
+      navigate("/");
+    }
+    setTimeout(() => {
+      setIsEmpty("");
+    }, 5000);
+    setIsLoading(false);
   };
 
   return (
@@ -84,6 +106,15 @@ const Login = () => {
             >
               {isLoading ? "Login..." : "Login"}
             </button>
+          </div>
+          <div
+            className={
+              isEmpty
+                ? "my-3 h-fit w-full animate-pulse rounded bg-red-500 p-1 text-center"
+                : "hidden"
+            }
+          >
+            <p>{isEmpty}</p>
           </div>
           <div className="mt-4 flex items-center justify-between">
             <span className="w-1/5 border-b md:w-1/4"></span>
