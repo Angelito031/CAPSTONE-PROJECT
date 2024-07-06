@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.jsx";
+import Home from "./layout/Home.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import ErrorPage from "./components/ErrorPage.jsx";
@@ -10,7 +10,47 @@ import Login from "./components/Login.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/jobs",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/jobs/:searchQuery",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/job/:jobId",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/students",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/student/:studentId",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/companies",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/company/:companyId",
+    element: <Home />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile/:userId",
+    element: <Home />,
     errorElement: <ErrorPage />,
   },
   {

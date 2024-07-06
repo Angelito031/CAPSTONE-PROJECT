@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "axios";
 
 const useAuthStore = create((set) => ({
-  isAuth: false,
+  isAuth: true,
   user: null,
   serverMessage: "",
   setUser: (user) => set({ user }),
@@ -18,7 +18,7 @@ const useAuthStore = create((set) => ({
         isAuth: true,
       });
     } catch (error) {
-      console.error("Login failed", error);
+      console.error("Error during login:", error);
     }
   },
   logout: async () => {
@@ -65,4 +65,19 @@ const useUserStore = create((set) => ({
   },
 }));
 
-export { useAuthStore, useJobStore, useUserStore };
+const useSearchStore = create((set) => ({
+  searchQuery: "",
+  setSearchQuery: (search) => set({ searchQuery: search }),
+  search: async (query) => {
+    try {
+      const response = await axios.get(
+        `/api/jobs?search=${encodeURIComponent(query)}`,
+      );
+      set({ jobs: response.data });
+    } catch (error) {
+      console.error("Failed to search jobs", error);
+    }
+  },
+}));
+
+export { useAuthStore, useJobStore, useUserStore, useSearchStore };
