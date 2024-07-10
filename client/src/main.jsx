@@ -6,6 +6,7 @@ import "./index.css";
 import ErrorPage from "./components/ErrorPage.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
+import Jobs from "./layout/Jobs.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,19 +16,27 @@ const router = createBrowserRouter([
   },
   {
     path: "/jobs",
-    element: <Home />,
+    element: <Jobs />,
     errorElement: <ErrorPage />,
-  },
-  {
-    path: "/jobs/:searchQuery",
-    element: <Home />,
-    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/jobs/filter/:filter",
+        element: <Jobs />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/jobs/search/:searchQuery",
+        element: <Jobs />,
+        errorElement: <ErrorPage />,
+      },
+    ],
   },
   {
     path: "/job/:jobId",
     element: <Home />,
     errorElement: <ErrorPage />,
   },
+  
   {
     path: "/students",
     element: <Home />,

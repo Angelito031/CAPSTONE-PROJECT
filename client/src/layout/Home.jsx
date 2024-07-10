@@ -1,10 +1,13 @@
 import { useAuthStore } from "../store/store";
 import { useSearchStore } from "../store/store";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import univ from "../assets/univ.jpg";
 import Header from "./Header";
 import Footer from "./Footer";
-import { useState } from "react";
 import TopRecommendation from "../components/TopRecommendation";
+import SearchBox from "../components/SearchBox";
+
 
 const Home = () => {
   const { isAuth } = useAuthStore();
@@ -18,14 +21,14 @@ const Home = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    const response = await search(searchQuery);
-    if (response.status === 204) {
-      navigate("/not-found");
-    } else if (response.status === 200) {
-      navigate(`/job/${searchQuery}`);
-    }
-    setIsLoading(false);
+   
+    console.log(searchQuery)
+    //const response = await search(searchQuery);
+    // if (response.status === 204) {
+    //   navigate("/not-found");
+    // } 
+      navigate(`/jobs/search/${searchQuery}`);
+
   };
 
   return isAuth ? (
@@ -47,37 +50,13 @@ const Home = () => {
                 de Manila&apos;s OJT ensures graduates are well-prepared for the
                 job market.
               </p>
-              <div className="flex w-full items-end justify-center md:justify-start">
-                <div className="relative mr-4 w-2/4 md:w-full lg:w-full xl:w-1/2">
-                  <label
-                    htmlFor="home-field"
-                    className="text-sm leading-7 text-gray-600"
-                  >
-                    Search A Job
-                  </label>
-                  <input
-                    type="text"
-                    id="home-field"
-                    name="search"
-                    value={searchQuery}
-                    onChange={handleInputChange}
-                    className="w-full rounded border border-gray-300 bg-gray-100 bg-opacity-50 px-3 py-1 text-base leading-8 text-gray-700 outline-none transition-colors duration-200 ease-in-out focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200"
-                  />
-                </div>
-                <button
-                  onSubmit={handleSubmit}
-                  disabled={isLoading}
-                  className="inline-flex rounded border-0 bg-indigo-500 px-6 py-2 text-lg text-white hover:bg-indigo-600 focus:outline-none"
-                >
-                  {isLoading ? "Searching..." : "Search"}
-                </button>
-              </div>
+              <SearchBox handleInputChange={handleInputChange} handleSubmit={handleSubmit} searchQuery={searchQuery} wsize={"w-full"} />
             </div>
             <div className="w-5/6 md:w-1/2 lg:w-full lg:max-w-lg">
               <img
                 className="rounded object-cover object-center"
                 alt="hero"
-                src="https://dummyimage.com/720x600"
+                src={univ}
               />
             </div>
           </div>
