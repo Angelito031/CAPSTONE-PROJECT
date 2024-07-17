@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useAuthStore } from "../store/store";
 
 const Register = () => {
-  const { register, serverMessage } = useAuthStore();
+  const { register} = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState("");
   const navigate = useNavigate();
@@ -31,17 +31,11 @@ const Register = () => {
     } else if (credentials.email === "") {
       setIsEmpty("Email is Empty, Please fill up all credentials");
       return false;
-    } else if (credentials.username === "") {
-      setIsEmpty("Username is Empty, Please fill up all credentials");
-      return false;
     } else if (credentials.password === "") {
       setIsEmpty("Password is Empty, Please fill up all credentials");
       return false;
     } else if (credentials.password !== credentials.repassword) {
       setIsEmpty("Password does not match");
-      return false;
-    } else if (serverMessage !== "") {
-      setIsEmpty(serverMessage);
       return false;
     } else {
       return true;
@@ -103,16 +97,6 @@ const Register = () => {
               value={credentials.email}
               onChange={handleInputChange}
               placeholder="Enter your Email"
-            />
-          </div>
-          <div className="mt-4">
-            <input
-              className="focus:shadow-outline block w-full appearance-none rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 focus:outline-none"
-              type="text"
-              name="username"
-              value={credentials.username}
-              onChange={handleInputChange}
-              placeholder="Enter your Username"
             />
           </div>
           <div className="mt-4">

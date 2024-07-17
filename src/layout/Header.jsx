@@ -4,13 +4,8 @@ import logo from "../assets/udm-logo.jpg"
 
 
 const Header = () => {
-  const { logout } = useAuthStore();
-  const user = {
-    role: "STUDENT",
-    id: "1",
-  };
+  const {user, logout } = useAuthStore();
 
-  
   return (
     <header className="body-font text-gray-600 shadow-md ">
       <div className="container mx-auto flex flex-col flex-wrap items-center p-3 md:flex-row">
@@ -66,7 +61,7 @@ const Header = () => {
             </NavLink>
           ) : null}
           <NavLink
-            to={`/profile/${user.id}`}
+            to={`/profile/${user.uid}`}
             className={({ isActive }) =>
               isActive
                 ? "mr-5 underline text-green-900 font-semibold shadow-sm hover:text-gray-900"

@@ -7,11 +7,11 @@ const Login = () => {
   const { login } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState("");
-  const navigate = useNavigate();
   const [credentials, setCredentials] = useState({
-    username: "",
+    email: "",
     password: "",
   });
+  const navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +22,7 @@ const Login = () => {
   };
 
   const handleCheck = () => {
-    if (credentials.username === "") {
+    if (credentials.email === "") {
       setIsEmpty("Username is Empty, Please fill up all credentials");
       return false;
     } else if (credentials.password === "") {
@@ -47,7 +47,7 @@ const Login = () => {
 
   return (
     <div className="h-screen w-screen py-16">
-      <div className="mx-auto flex max-w-sm overflow-hidden rounded-lg bg-white shadow-lg lg:max-w-4xl">
+      <form className="mx-auto flex max-w-sm overflow-hidden rounded-lg bg-white shadow-lg lg:max-w-4xl">
         <img
           src={univImage}
           alt="Universidad De Manila"
@@ -69,15 +69,15 @@ const Login = () => {
           </div>
           <div className="mt-4">
             <label className="mb-2 block text-sm font-bold text-gray-700">
-              Username
+              Email
             </label>
             <input
               className="focus:shadow-outline block w-full appearance-none rounded border border-gray-300 bg-gray-200 px-4 py-2 text-gray-700 focus:outline-none"
-              type="text"
-              name="username"
-              value={credentials.username}
+              type="email"
+              name="email"
+              value={credentials.email}
               onChange={handleInputChange}
-              placeholder="Username"
+              placeholder="email@example.com"
             />
           </div>
           <div className="mt-4">
@@ -95,7 +95,7 @@ const Login = () => {
               name="password"
               value={credentials.password}
               onChange={handleInputChange}
-              placeholder="Password"
+              placeholder="*********"
             />
           </div>
           <div className="mt-8">
@@ -124,7 +124,7 @@ const Login = () => {
             <span className="w-1/5 border-b md:w-1/4"></span>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import {motion } from "framer-motion"
 import Job from "./Job";
 
 
@@ -41,7 +40,7 @@ const TopRecommendation = () => {
   ];
 
   return (
-    <motion.section className="body-font text-gray-600 shadow-md"  >
+    <section className="body-font text-gray-600 shadow-md"  >
       <div className="container mx-auto px-5 py-24">
         <div className="flex flex-col">
           <div className="h-1 overflow-hidden rounded bg-gray-200">
@@ -65,7 +64,7 @@ const TopRecommendation = () => {
           ))}
         </div>
       </div>
-    </motion.section>
+    </section>
   );
 };
 

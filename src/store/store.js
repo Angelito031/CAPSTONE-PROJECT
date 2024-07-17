@@ -1,40 +1,59 @@
 import { create } from "zustand";
-import axios from "axios";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { auth, db }  from "../firebase/firebase.js"
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
 const useAuthStore = create((set) => ({
-  isAuth: true,
+  isAuth: false,
   user: null,
-  serverMessage: "",
   setUser: (user) => set({ user }),
   setIsAuth: (isAuth) => set({ isAuth }),
-  setServerMessage: (serverMessage) => set({ serverMessage }),
-  login: async (credentials) => {
+  login: async ({ email, password }) => {
     try {
-      const response = await axios.post("/api/login", credentials);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
 
-      set({
-        user: response.data.user,
-        serverMessage: response.data.message,
-        isAuth: true,
-      });
+      const userRef = doc(db, "users", userCredential.user.uid);
+      const userSnapshot = await getDoc(userRef);
+      const userData = userSnapshot.data();
+
+      set({ user: userData, isAuth: true });
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error("Login failed", error.message);
     }
   },
+
   logout: async () => {
     try {
-      await axios.post("/api/logout");
+      await signOut(auth);
       set({ user: null, isAuth: false });
     } catch (error) {
       console.error("Logout failed", error);
     }
   },
-  register: async (userData) => {
+  register: async (userDetails) => {
+    console.log(userDetails);
+    const { email, password, firstname, lastname } = userDetails;
     try {
-      const response = await axios.post("/api/register", userData);
-      set({ user: response.data.user, serverMessage: response.data.message });
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userId = userCredential.user.uid;
+  
+      console.log("User created with UID:", userId);
+  
+      await setDoc(doc(db, "users", userId), {
+        firstname,
+        lastname,
+        email,
+        role: "STUDENT",
+        uid: userId,
+        resume: {}
+      });
+  
+      await setDoc(doc(db, "usersChats", userId), {
+        chats: []
+      });
+  
     } catch (error) {
-      console.error("Registration failed", error);
+      console.error("Registration failed", error.message, error.code);
     }
   },
 }));
