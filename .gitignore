@@ -7,11 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +17,52 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project dependencies
+node_modules
+dist
+dist-ssr
+
+# Firebase
+firebase-debug.log
+firebase-debug.log
+
+# Vite
+vite.config.js
+
+# Firebase Emulator
+node_modules/@firebase
+firebase.json
+firestore
+firestore.indexes.json
+firebase-debug.log
+
+# Local development
+.local
+.env.local
+.env.development.local
+.env.production.local
+.env.test.local
+
+# Typescript
+tsconfig.json
+tsconfig.node.json
+
+# ESLint
+.eslintrc.js
+.eslintignore
+
+# Prettier
+.prettierrc
+.prettierrc.json
+
+# Other
+.vercel
+.env
+.env.development
+.env.production
+.env.test
+.env.example
+.env.example.local
+.env.local.example
+
