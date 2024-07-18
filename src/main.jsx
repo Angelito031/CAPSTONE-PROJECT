@@ -7,6 +7,7 @@ import ErrorPage from "./components/ErrorPage.jsx";
 import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
 import Jobs from "./layout/Jobs.jsx";
+import Profile from "./layout/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/profile/:userId",
-    element: <Home />,
+    element: <Profile />,
     errorElement: <ErrorPage />,
   },
   {

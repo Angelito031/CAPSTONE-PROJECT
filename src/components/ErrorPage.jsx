@@ -1,8 +1,20 @@
-import { Link, useRouteError } from "react-router-dom";
+import { useNavigate, useRouteError } from "react-router-dom";
+import { useAuthStore } from "../store/store";
 
 const ErrorPage = () => {
+  const {logout} = useAuthStore();
   const error = useRouteError();
+  const navigate = useNavigate();
   console.error(error);
+
+  const handleError = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    }
+  };
 
   return (
     <div className="my-12 flex min-h-[70vh] w-full items-center justify-center px-4 text-gray-900">
@@ -18,12 +30,12 @@ const ErrorPage = () => {
           address, or the page has been moved to another URL.
         </p>
 
-        <Link
-          to="/"
+        <button
+          onClick={handleError}
           className="flex items-center justify-center rounded-md border border-green-500 px-5 py-2 text-xl text-black hover:bg-green-500 hover:text-white"
         >
-          Back to Home Page
-        </Link>
+          Uhhh LOGOUT!
+        </button>
       </div>
     </div>
   );

@@ -1,13 +1,15 @@
 import { create } from "zustand";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, db }  from "../firebase/firebase.js"
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 
 const useAuthStore = create((set) => ({
   isAuth: false,
   user: null,
+  currentUser: null,
   setUser: (user) => set({ user }),
   setIsAuth: (isAuth) => set({ isAuth }),
+  setCurrentUser: (currentUser) => set({ currentUser }),
   login: async ({ email, password }) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -16,18 +18,18 @@ const useAuthStore = create((set) => ({
       const userSnapshot = await getDoc(userRef);
       const userData = userSnapshot.data();
 
-      set({ user: userData, isAuth: true });
+      set({ user: userData, isAuth: true,  currentUser: auth.currentUser.uid });
     } catch (error) {
-      console.error("Login failed", error.message);
+      console.error("Login failed", error.message, error.code);
     }
   },
 
   logout: async () => {
     try {
       await signOut(auth);
-      set({ user: null, isAuth: false });
+      set({ user: null, isAuth: false,  currentUser: null });
     } catch (error) {
-      console.error("Logout failed", error);
+      console.error("Logout failed", error.message, error.code);
     }
   },
   register: async (userDetails) => {
@@ -73,13 +75,19 @@ const useJobStore = create((set) => ({
 
 const useUserStore = create((set) => ({
   users: [],
+  isFetching: false,
   setUsers: (users) => set({ users }),
   fetchUsers: async () => {
+    set({ isFetching: true });
     try {
-      const response = await axios.get("/api/users");
-      set({ users: response.data });
+      const usersSnapshot = await getDocs(collection(db, "users"));
+      const usersList = usersSnapshot.docs.map(doc => doc.data()).filter(user => user.role !== 'SADMIN' && user.role !== 'ADMIN');
+
+      console.log(usersList);
+      set({ users: usersList, isFetching: false });
     } catch (error) {
-      console.error("Failed to fetch users", error);
+      console.error("Failed to fetch users", error.message, error.code);
+      set({ isFetching: false });
     }
   },
 }));
