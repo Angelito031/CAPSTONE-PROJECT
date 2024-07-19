@@ -8,6 +8,7 @@ import Register from "./components/Register.jsx";
 import Login from "./components/Login.jsx";
 import Jobs from "./layout/Jobs.jsx";
 import Profile from "./layout/Profile.jsx";
+import ProfileEdit from "./layout/ProfileEdit.jsx";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,11 @@ const router = createBrowserRouter([
   {
     path: "/profile/:userId",
     element: <Profile />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/profile/edit/:userId",
+    element: <ProfileEdit />,
     errorElement: <ErrorPage />,
   },
   {
