@@ -10,20 +10,19 @@ const Profile = () => {
   return (
     <div className='App'>
         <Header />
-        <div className="px-16">
-            
-            <div className="relative p-8 bg-gray-50 shadow-lg shadow-gray-400 mt-24">
+        <main className="px-16">
+            <div className="relative p-8 bg-gray-50 shadow-lg shadow-gray-400 mt-3">
             <div >
                 <img src={univ} alt="Profile Background" className='w-full h-60'/>
             </div>
-                <div className='flex items-center '>
+                <div className='flex lg:items-center flex-wrap'>
                     <ProfileButtons />
                     <ProfilePicture />
                 </div>
                 <ProfileInfo />
                 <ProfileDescription />
             </div>
-        </div>
+        </main>
         <Footer />
     </div>
   );

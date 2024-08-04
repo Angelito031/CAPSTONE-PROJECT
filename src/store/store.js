@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth, db }  from "../firebase/firebase.js"
-import { collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 
 const useAuthStore = create((set) => ({
   isAuth: false,
@@ -90,6 +90,20 @@ const useUserStore = create((set) => ({
       set({ isFetching: false });
     }
   },
+  updateUser: async (userDetails) => {
+    try {
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      const updatedUser = await updateDoc(userRef, {
+        ...userDetails
+      })
+
+      const userSnapshot = await getDoc(userRef);
+      const userData = userSnapshot.data();
+      set({ user: userData });
+    } catch (error) {
+      console.error("Failed to update user", error.message, error.code);
+    }
+  }
 }));
 
 const useSearchStore = create((set) => ({
