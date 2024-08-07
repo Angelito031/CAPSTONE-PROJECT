@@ -10,7 +10,9 @@ const ProfileInfo = () => {
         {name}
       </h1>
       <p className="font-light text-gray-600 mt-3">{user.location}</p>
-      <p className="font-light text-gray-600 mt-1">{user.email + " | " + user.contactno}</p>
+      <p className="font-light text-gray-600 mt-1">
+        {user.email} {user.contactno ? " | " + user.contactno : ""}
+      </p>
       <p className="mt-5 text-gray-500">
         {user.department}
       </p>

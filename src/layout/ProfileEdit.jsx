@@ -16,7 +16,6 @@ const ProfileEdit = () => {
   const [credentials, setCredentials] = useState({
     firstname: "",
     lastname: "",
-    email: "",
     location: "",
     department: "",
     description: "",
@@ -39,9 +38,12 @@ const ProfileEdit = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    const capitalizedValue = (name === 'firstname' || name === 'lastname' || name === "location")
+      ? value.charAt(0).toUpperCase() + value.slice(1)
+      : value;
     setCredentials((prevCredentials) => ({
       ...prevCredentials,
-      [name]: value,
+      [name]: capitalizedValue,
     }));
   };
 
@@ -106,14 +108,6 @@ const ProfileEdit = () => {
                     id="contactno"
                     value={credentials.contactno}
                     placeholder="CP Number"
-                    handleInputChange={handleInputChange}
-                  />
-                  <EditInputField
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={credentials.email}
-                    placeholder="Email"
                     handleInputChange={handleInputChange}
                   />
                 </div>

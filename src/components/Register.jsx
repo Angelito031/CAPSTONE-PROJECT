@@ -11,15 +11,18 @@ const Register = () => {
     firstname: "",
     lastname: "",
     email: "",
-    username: "",
     password: "",
     repassword: "",
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCredentials({ ...credentials, [name]: value });
+    const capitalizedValue = (name === 'firstname' || name === 'lastname')
+      ? value.charAt(0).toUpperCase() + value.slice(1)
+      : value;
+    setCredentials({ ...credentials, [name]: capitalizedValue });
   };
+  
 
   const handleCheck = () => {
     if (credentials.firstname === "") {
@@ -77,6 +80,7 @@ const Register = () => {
               value={credentials.firstname}
               onChange={handleInputChange}
               placeholder="Enter your Firstname"
+              
             />
           </div>
           <div className="mt-4">
@@ -96,7 +100,7 @@ const Register = () => {
               name="email"
               value={credentials.email}
               onChange={handleInputChange}
-              placeholder="Enter your Email"
+              placeholder="Enter your Valid Email for verification"
             />
           </div>
           <div className="mt-4">
