@@ -106,6 +106,19 @@ const useUserStore = create((set) => ({
       console.error("The user needs to re-authenticate before this operation can be executed.");
     }
   }
+  },
+  updateResume: async (resume) => {
+    try {
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      // Update user details in Firestore
+      await updateDoc(userRef, { resume });
+    } catch (error) {
+      console.error("Failed to update user", error.message, error.code);
+      // Handle specific error cases if needed
+      if (error.code === "auth/requires-recent-login") {
+        console.error("The user needs to re-authenticate before this operation can be executed.");
+      }
+    }
   }
 }));
 

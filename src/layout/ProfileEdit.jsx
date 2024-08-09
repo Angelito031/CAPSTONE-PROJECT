@@ -7,6 +7,7 @@ import EditTextArea from "../components/EditTextArea";
 import { useState, useEffect } from "react";
 import { useUserStore, useAuthStore } from "../store/store";
 import { useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
 
 const ProfileEdit = () => {
   const { user, setUser } = useAuthStore();
@@ -63,7 +64,10 @@ const ProfileEdit = () => {
         <div className="lg:w-[80%] md:w-[90%] xs:w-[96%] mx-auto flex gap-4">
           <div className="lg:w-[88%] md:w-[80%] sm:w-[88%] xs:w-full mx-auto shadow-2xl p-4 rounded-xl h-fit self-center bg-gray-50/40">
             <div>
-              <h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif mb-2 text-black">Profile Edit</h1>
+              <div className="flex justify-between">
+                  <h1 className="lg:text-3xl md:text-2xl sm:text-xl xs:text-xl font-serif mb-1 text-black">Profile Edit</h1>
+                  <button onClick={() => navigate(-1)} className="text-white h-5 lg:h-fit p-2 rounded-md bg-gray-500 hover:bg-gray-600 shadow hover:shadow-lg font-extralight lg:font-medium transition transform hover:-translate-y-0.5"><FaArrowLeft /></button>
+              </div>
               <form onSubmit={handleSubmit}>
                 <CoverImage />
                 <h2 className="text-center mt-1 font-semibold text-gray-800">Upload Profile and Edit Info</h2>
@@ -114,6 +118,7 @@ const ProfileEdit = () => {
                 <EditTextArea
                   name="description"
                   value={credentials.description}
+                  placeholder="User Description"
                   handleInputChange={handleInputChange}
                 />
                 <div className="w-full rounded-lg bg-blue-500 mt-4 text-white text-lg font-semibold">

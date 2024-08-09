@@ -7,7 +7,7 @@ const ProfileDescription = () => {
   return (
     <div className="mt-12 flex flex-col justify-center">
       <p className="text-gray-600 text-center font-light">
-        {user.description}
+        {user?.description}
       </p>
     </div>
   );
